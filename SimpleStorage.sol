@@ -34,13 +34,8 @@ contract SimpleStorage {
         myFavouriteNumber = 0;
     }
 
-    function changeMyFavouriteNumber(uint _myFavouriteNumber) public {
+    function changeMyFavouriteNumber(uint _myFavouriteNumber) public virtual {
         myFavouriteNumber = _myFavouriteNumber;
     }
 }
 
-contract SimpleStorage2 {}
-
-contract SimpleStorage3 {}
-
-contract SimpleStorage4 {}
