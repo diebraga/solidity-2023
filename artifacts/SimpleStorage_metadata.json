@@ -126,7 +126,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"simpleStorage.sol": "SimpleStorage"
+			"SimpleStorage.sol": "SimpleStorage"
 		},
 		"evmVersion": "shanghai",
 		"libraries": {},
@@ -140,7 +140,7 @@
 		"remappings": []
 	},
 	"sources": {
-		"simpleStorage.sol": {
+		"SimpleStorage.sol": {
 			"keccak256": "0x46730fb573577ec53620fea9d5093514ea56a21520c0a8bf0056531e17f5646a",
 			"license": "MIT",
 			"urls": [
