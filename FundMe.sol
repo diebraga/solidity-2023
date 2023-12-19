@@ -20,5 +20,20 @@ contract FundMe {
         addressToAmoutFunded[funder] = addressToAmoutFunded[funder] + ethValue;
     }
 
-   
+    function withdraw() public {        
+        for (uint funderIndex = 0; funderIndex < funders.length; funderIndex++) {
+            address funder = funders[funderIndex];
+            addressToAmoutFunded[funder] = 0;
+        }
+        funders = new address[](0);
+
+        // // transfer
+        // payable(msg.sender).transfer(address(this).balance);
+        // // send
+        // bool sendSuccess = payable(msg.sender).send(address(this).balance);
+        // require(sendSuccess, "Send Failed");
+        // // call
+        (bool callSuccess, ) = payable(msg.sender).call{value: address(this).balance}("");
+        require(callSuccess, "Call failed");
+    }
 }
