@@ -5,14 +5,19 @@ import { PriceConverter } from "./PriceConverter.sol";
 
 contract FundMe {
     using PriceConverter for uint;
-    uint public minimunInDollars = 5e18;
+    uint public constant MIN_USD = 5e18;
 
     address[] funders;
     mapping(address funder => uint amountFunded) public addressToAmoutFunded;
 
+    address public immutable i_owner;
+
+    constructor () {
+        i_owner = msg.sender;
+    }
     function fund() public payable {
         uint ethValue = msg.value;
-        require(msg.value.getConversionRate() >= 1e18, "You didn't send anough ETH"); // 1e18 = 1 ETH = 1000000000000000000 
+        require(msg.value.getConversionRate() >= MIN_USD, "You didn't send anough ETH"); // 1e18 = 1 ETH = 1000000000000000000 
         
         address funder = msg.sender;
 
@@ -20,7 +25,7 @@ contract FundMe {
         addressToAmoutFunded[funder] = addressToAmoutFunded[funder] + ethValue;
     }
 
-    function withdraw() public {        
+    function withdraw() public onlyOwner {  
         for (uint funderIndex = 0; funderIndex < funders.length; funderIndex++) {
             address funder = funders[funderIndex];
             addressToAmoutFunded[funder] = 0;
@@ -35,5 +40,10 @@ contract FundMe {
         // // call
         (bool callSuccess, ) = payable(msg.sender).call{value: address(this).balance}("");
         require(callSuccess, "Call failed");
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender==i_owner,"Sender is not owner");
+        _;
     }
 }
